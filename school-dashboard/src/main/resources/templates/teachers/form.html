@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${teacher.id != null ? 'Edit Teacher' : 'Add Teacher'}">Teacher Form</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header-content">
+                <h1>🏫 School Management Dashboard</h1>
+                <nav class="nav">
+                    <a href="/" class="nav-link">Dashboard</a>
+                    <a href="/students" class="nav-link">Students</a>
+                    <a href="/teachers" class="nav-link active">Teachers</a>
+                </nav>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="card">
+                <div class="card-header">
+                    <h2 th:text="${teacher.id != null ? '✏️ Edit Teacher' : '➕ Add New Teacher'}">Teacher Form</h2>
+                    <a href="/teachers" class="btn btn-secondary btn-small">Back to List</a>
+                </div>
+
+                <div style="padding: 2rem;">
+                    <form th:action="@{${teacher.id != null ? '/teachers/' + teacher.id : '/teachers'}}" 
+                          th:object="${teacher}" method="post">
+                        
+                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem;">
+                            <div class="form-group">
+                                <label class="form-label">First Name *</label>
+                                <input type="text" class="form-input" th:field="*{firstName}" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Last Name *</label>
+                                <input type="text" class="form-input" th:field="*{lastName}" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Email *</label>
+                                <input type="email" class="form-input" th:field="*{email}" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Date of Birth *</label>
+                                <input type="date" class="form-input" th:field="*{dateOfBirth}" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Gender *</label>
+                                <select class="form-select" th:field="*{gender}" required>
+                                    <option value="">Select Gender</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Employee ID *</label>
+                                <input type="text" class="form-input" th:field="*{employeeId}" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Subject *</label>
+                                <input type="text" class="form-input" th:field="*{subject}" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Qualification *</label>
+                                <input type="text" class="form-input" th:field="*{qualification}" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Phone Number</label>
+                                <input type="tel" class="form-input" th:field="*{phoneNumber}">
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Joining Date *</label>
+                                <input type="date" class="form-input" th:field="*{joiningDate}" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Experience (Years)</label>
+                                <input type="number" class="form-input" th:field="*{experienceYears}" min="0">
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Salary</label>
+                                <input type="number" class="form-input" th:field="*{salary}" step="0.01" min="0">
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Status</label>
+                                <select class="form-select" th:field="*{status}">
+                                    <option value="ACTIVE">Active</option>
+                                    <option value="ON_LEAVE">On Leave</option>
+                                    <option value="RESIGNED">Resigned</option>
+                                    <option value="RETIRED">Retired</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Address</label>
+                            <textarea class="form-textarea" th:field="*{address}"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Specialization</label>
+                            <textarea class="form-textarea" th:field="*{specialization}"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Remarks</label>
+                            <textarea class="form-textarea" th:field="*{remarks}"></textarea>
+                        </div>
+
+                        <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                            <button type="submit" class="btn btn-primary">
+                                <span th:text="${teacher.id != null ? 'Update Teacher' : 'Create Teacher'}">Submit</span>
+                            </button>
+                            <a href="/teachers" class="btn btn-secondary">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>&copy; 2025 School Management System. All rights reserved.</p>
+        </footer>
+    </div>
+</body>
+</html>

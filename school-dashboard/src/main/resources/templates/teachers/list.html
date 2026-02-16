@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teachers - School Dashboard</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header-content">
+                <h1>🏫 School Management Dashboard</h1>
+                <nav class="nav">
+                    <a href="/" class="nav-link">Dashboard</a>
+                    <a href="/students" class="nav-link">Students</a>
+                    <a href="/teachers" class="nav-link active">Teachers</a>
+                </nav>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="card">
+                <div class="card-header">
+                    <h2>👨‍🏫 Teachers</h2>
+                    <a href="/teachers/new" class="btn btn-primary">Add New Teacher</a>
+                </div>
+
+                <!-- Search -->
+                <div style="padding: 1.5rem;">
+                    <form class="search-box" method="get">
+                        <input type="text" name="search" class="search-input" 
+                               placeholder="Search by name, email, subject, or employee ID..."
+                               th:value="${search}">
+                        <button type="submit" class="btn btn-primary">Search</button>
+                        <a href="/teachers" class="btn btn-secondary" th:if="${search}">Clear</a>
+                    </form>
+                </div>
+
+                <!-- Alerts -->
+                <div style="padding: 0 1.5rem;" th:if="${success}">
+                    <div class="alert alert-success" th:text="${success}"></div>
+                </div>
+                <div style="padding: 0 1.5rem;" th:if="${error}">
+                    <div class="alert alert-error" th:text="${error}"></div>
+                </div>
+
+                <!-- Table -->
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Employee ID</th>
+                                <th>Name</th>
+                                <th>Subject</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="teacher : ${teachers}">
+                                <td th:text="${teacher.employeeId}">T001</td>
+                                <td th:text="${teacher.fullName}">Teacher Name</td>
+                                <td th:text="${teacher.subject}">Subject</td>
+                                <td th:text="${teacher.email}"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="43262e222a2f0330202b2c2c2f6d202c2e">[email&#160;protected]</a></td>
+                                <td th:text="${teacher.phoneNumber}">555-0000</td>
+                                <td>
+                                    <span class="badge badge-success" 
+                                          th:if="${teacher.status.name() == 'ACTIVE'}"
+                                          th:text="${teacher.status}">Active</span>
+                                    <span class="badge badge-warning" 
+                                          th:if="${teacher.status.name() == 'ON_LEAVE'}"
+                                          th:text="${teacher.status}">On Leave</span>
+                                    <span class="badge badge-danger" 
+                                          th:if="${teacher.status.name() != 'ACTIVE' && teacher.status.name() != 'ON_LEAVE'}"
+                                          th:text="${teacher.status}">Inactive</span>
+                                </td>
+                                <td>
+                                    <div class="actions">
+                                        <a th:href="@{/teachers/{id}(id=${teacher.id})}" 
+                                           class="btn btn-small btn-primary">View</a>
+                                        <a th:href="@{/teachers/{id}/edit(id=${teacher.id})}" 
+                                           class="btn btn-small btn-secondary">Edit</a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+    

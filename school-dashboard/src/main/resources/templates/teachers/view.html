@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Teacher Details</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header-content">
+                <h1>🏫 School Management Dashboard</h1>
+                <nav class="nav">
+                    <a href="/" class="nav-link">Dashboard</a>
+                    <a href="/students" class="nav-link">Students</a>
+                    <a href="/teachers" class="nav-link active">Teachers</a>
+                </nav>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="card">
+                <div class="card-header">
+                    <h2>👨‍🏫 Teacher Details</h2>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <a th:href="@{/teachers/{id}/edit(id=${teacher.id})}" class="btn btn-primary btn-small">Edit</a>
+                        <a href="/teachers" class="btn btn-secondary btn-small">Back to List</a>
+                    </div>
+                </div>
+
+                <div style="padding: 2rem;">
+                    <h3 style="margin-bottom: 1.5rem; color: var(--primary-color);">Personal Information</h3>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-bottom: 2rem;">
+                        <div>
+                            <p style="color: var(--text-secondary); font-size: 0.875rem;">Full Name</p>
+                            <p style="font-weight: 600;" th:text="${teacher.fullName}">Teacher Name</p>
+                        </div>
+                        <div>
+                            <p style="color: var(--text-secondary); font-size: 0.875rem;">Email</p>
+                            <p style="font-weight: 600;" th:text="${teacher.email}"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="741119151d183407171c1b1b185a171b19">[email&#160;protected]</a></p>
+                        </div>
+                        <div>
+                            <p style="color: var(--text-secondary); font-size: 0.875rem;">Date of Birth</p>
+                            <p style="font-weight: 600;" th:text="${#temporals.format(teacher.dateOfBirth, 'MMM dd, yyyy')}">Date</p>
+                        </div>
+                        <div>
+                            <p style="color: var(--text-secondary); font-size: 0.875rem;">Age</p>
+                            <p style="font-weight: 600;" th:text="${teacher.age} + ' years'">Age</p>
+                        </div>
+                        <div>
+                            <p style="color: var(--text-secondary); font-size: 0.875rem;">Gender</p>
+                            <p style="font-weight: 600;" th:text="${teacher.gender}">Gender</p>
+                        </div>
+                        <div>
+                            <p style="color: var(--text-secondary); font-size: 0.875rem;">Phone</p>
+                            <p style="font-weight: 600;" th:text="${teacher.phoneNumber ?: 'N/A'}">Phone</p>
+                        </div>
+                    </div>
+
+                    <h3 style="margin-bottom: 1.5rem; color: var(--primary-color);">Employment Information</h3>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-bottom: 2rem;">
+                        <div>
+                            <p style="color: var(--text-secondary); font-size: 0.875rem;">Employee ID</p>
+                            <p style="font-weight: 600;" th:text="${teacher.employeeId}">ID</p>
+                        </div>
+                        <div>
+                            <p style="color: var(--text-secondary); font-size: 0.875rem;">Subject</p>
+                            <p style="font-weight: 600;" th:text="${teacher.subject}">Subject</p>
+                        </div>
+                        <div>
+                            <p style="color: var(--text-secondary); font-size: 0.875rem;">Qualification</p>
+                            <p style="font-weight: 600;" th:text="${teacher.qualification}">Qualification</p>
+                        </div>
+                        <div>
+                            <p style="color: var(--text-secondary); font-size: 0.875rem;">Joining Date</p>
+                            <p style="font-weight: 600;" th:text="${#temporals.format(teacher.joiningDate, 'MMM dd, yyyy')}">Date</p>
+                        </div>
+                        <div>
+                            <p style="color: var(--text-secondary); font-size: 0.875rem;">Experience</p>
+                            <p style="font-weight: 600;" th:text="${teacher.experienceYears} + ' years'">Experience</p>
+                        </div>
+                        <div>
+                            <p style="color: var(--text-secondary); font-size: 0.875rem;">Salary</p>
+                            <p style="font-weight: 600;" th:text="'$' + ${teacher.salary}">Salary</p>
+                        </div>
+                        <div>
+                            <p style="color: var(--text-secondary); font-size: 0.875rem;">Status</p>
+                            <span class="badge badge-success" th:if="${teacher.status.name() == 'ACTIVE'}" th:text="${teacher.status}">Active</span>
+                        </div>
+                    </div>
+
+                    <h3 style="margin-bottom: 1.5rem; color: var(--primary-color);">Address</h3>
+                    <p th:text="${teacher.address ?: 'No address provided'}">Address</p>
+
+                    <h3 style="margin: 2rem 0 1rem; color: var(--primary-color);">Specialization</h3>
+                    <p th:text="${teacher.specialization ?: 'No specialization mentioned'}">Specialization</p>
+
+                    <h3 style="margin: 2rem 0 1rem; color: var(--primary-color);">Remarks</h3>
+                    <p th:text="${teacher.remarks ?: 'No remarks'}">Remarks</p>
+
+                    <form th:action="@{/teachers/{id}/delete(id=${teacher.id})}" method="post" 
+                          onsubmit="return confirm('Delete this teacher?');" style="margin-top: 2rem;">
+                        <button type="submit" class="btn btn-danger">Delete Teacher</button>
+                    </form>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+    

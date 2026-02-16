@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Details</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header-content">
+                <h1>🏫 School Management Dashboard</h1>
+                <nav class="nav">
+                    <a href="/" class="nav-link">Dashboard</a>
+                    <a href="/students" class="nav-link active">Students</a>
+                    <a href="/teachers" class="nav-link">Teachers</a>
+                </nav>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="card">
+                <div class="card-header">
+                    <h2>👨‍🎓 Student Details</h2>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <a th:href="@{/students/{id}/edit(id=${student.id})}" class="btn btn-primary btn-small">Edit</a>
+                        <a href="/students" class="btn btn-secondary btn-small">Back to List</a>
+                    </div>
+                </div>
+
+                <div style="padding: 2rem;">
+                    <!-- Personal Information -->
+                    <h3 style="margin-bottom: 1.5rem; color: var(--primary-color);">Personal Information</h3>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-bottom: 2rem;">
+                        <div>
+                            <p style="color: var(--text-secondary); font-size: 0.875rem; margin-bottom: 0.25rem;">Full Name</p>
+                            <p style="font-weight: 600;" th:text="${student.fullName}">Student Name</p>
+                        </div>
+                        <div>
+                            <p style="color: var(--text-secondary); font-size: 0.875rem; margin-bottom: 0.25rem;">Email</p>
+                            <p style="font-weight: 600;" th:text="${student.email}"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="bcd9d1ddd5d0fccfdfd4d3d3d092dfd3d1">[email&#160;protected]</a></p>
+                        </div>
+                        <div>
+                            <p style="color: var(--text-secondary); font-size: 0.875rem; margin-bottom: 0.25rem;">Date of Birth</p>
+                            <p style="font-weight: 600;" th:text="${#temporals.format(student.dateOfBirth, 'MMM dd, yyyy')}">Jan 01, 2010</p>
+                        </div>
+                        <div>
+                            <p style="color: var(--text-secondary); font-size: 0.875rem; margin-bottom: 0.25rem;">Age</p>
+                            <p style="font-weight: 600;" th:text="${student.age} + ' years'">14 years</p>
+                        </div>
+                        <div>
+                            <p style="color: var(--text-secondary); font-size: 0.875rem; margin-bottom: 0.25rem;">Gender</p>
+                            <p style="font-weight: 600;" th:text="${student.gender}">Male</p>
+                        </div>
+                        <div>
+                            <p style="color: var(--text-secondary); font-size: 0.875rem; margin-bottom: 0.25rem;">Phone Number</p>
+                            <p style="font-weight: 600;" th:text="${student.phoneNumber ?: 'N/A'}">555-0000</p>
+                        </div>
+                    </div>
+
+                    <!-- Academic Information -->
+                    <h3 style="margin-bottom: 1.5rem; color: var(--primary-color);">Academic Information</h3>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-bottom: 2rem;">
+                        <div>
+                            <p style="color: var(--text-secondary); font-size: 0.875rem; margin-bottom: 0.25rem;">Roll Number</p>
+                            <p style="font-weight: 600;" th:text="${student.rollNumber}">10A001</p>
+                        </div>
+                        <div>
+                            <p style="color: var(--text-secondary); font-size: 0.875rem; margin-bottom: 0.25rem;">Grade</p>
+                            <p style="font-weight: 600;" th:text="${student.grade}">10</p>
+                        </div>
+                        <div>
+                            <p style="color: var(--text-secondary); font-size: 0.875rem; margin-bottom: 0.25rem;">Class Section</p>
+                            <p style="font-weight: 600;" th:text="${student.classSection}">A</p>
+                        </div>
+                        <div>
+                            <p style="color: var(--text-secondary); font-size: 0.875rem; margin-bottom: 0.25rem;">Enrollment Date</p>
+                            <p style="font-weight: 600;" th:text="${#temporals.format(student.enrollmentDate, 'MMM dd, yyyy')}">Jan 01, 2024</p>
+                        </div>
+                        <div>
+                            <p style="color: var(--text-secondary); font-size: 0.875rem; margin-bottom: 0.25rem;">Status</p>
+                            <p>
+                                <span class="badge badge-success" 
+                                      th:if="${student.status.name() == 'ACTIVE'}"
+                                      th:text="${student.status}">Active</span>
+                                <span class="badge badge-danger" 
+                                      th:if="${student.status.name() != 'ACTIVE'}"
+                                      th:text="${student.status}">Inactive</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Parent Information -->
+                    <h3 style="margin-bottom: 1.5rem; color: var(--primary-color);">Parent/Guardian Information</h3>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-bottom: 2rem;">
+                        <div>
+                            <p style="color: var(--text-secondary); font-size: 0.875rem; margin-bottom: 0.25rem;">Parent Name</p>
+                            <p style="font-weight: 600;" th:text="${student.parentName ?: 'N/A'}">Parent Name</p>
+                        </div>
+                        <div>
+                            <p style="color: var(--text-secondary); font-size: 0.875rem; margin-bottom: 0.25rem;">Parent Phone</p>
+                            <p style="font-weight: 600;" th:text="${student.parentPhone ?: 'N/A'}">555-0000</p>
+                        </div>
+                    </div>
+
+                    <!-- Address -->
+                    <h3 style="margin-bottom: 1.5rem; color: var(--primary-color);">Address</h3>
+                    <div style="margin-bottom: 2rem;">
+                        <p th:text="${student.address ?: 'No address provided'}">Address</p>
+                    </div>
+
+                    <!-- Remarks -->
+                    <h3 style="margin-bottom: 1.5rem; color: var(--primary-color);">Remarks</h3>
+                    <div style="margin-bottom: 2rem;">
+                        <p th:text="${student.remarks ?: 'No remarks'}">Remarks</p>
+                    </div>
+
+                    <!-- Delete Button -->
+                    <form th:action="@{/students/{id}/delete(id=${student.id})}" method="post" 
+                          onsubmit="return confirm('Are you sure you want to delete this student?');">
+                        <button type="submit" class="btn btn-danger">Delete Student</button>
+                    </form>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+    
